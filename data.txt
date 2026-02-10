@@ -1,0 +1,9 @@
+Distance (cm),Number of Steps
+10 cm,106
+20 cm,212
+30 cm,318
+50 cm,530
+100 cm,1061
+
+
+At y-axis >0.75g/<-0.75g, the robot will be titled.

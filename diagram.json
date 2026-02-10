@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "author": "Uri Shaked",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "board-esp32-devkit-c-v4",
+      "id": "esp",
+      "top": 76.8,
+      "left": 129.64,
+      "attrs": { "env": "micropython-20231005-v1.21.0" }
+    },
+    { "type": "wokwi-led", "id": "led1", "top": 73.2, "left": -44.2, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-resistor",
+      "id": "r1",
+      "top": 148.8,
+      "left": -48.55,
+      "rotate": 90,
+      "attrs": { "value": "1000" }
+    },
+    {
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": -13,
+      "left": -19.2,
+      "attrs": { "color": "green", "xray": "1" }
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 60,
+      "left": -209.4,
+      "attrs": { "volume": "0.1" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper1",
+      "top": 201.59,
+      "left": 329.82,
+      "attrs": { "size": "8", "arrow": "orange" }
+    },
+    {
+      "type": "wokwi-stepper-motor",
+      "id": "stepper2",
+      "top": -76.81,
+      "left": 473.82,
+      "attrs": { "size": "8", "arrow": "orange" }
+    },
+    { "type": "wokwi-a4988", "id": "drv1", "top": 369.6, "left": 158.4, "attrs": {} },
+    { "type": "wokwi-a4988", "id": "drv2", "top": 110.4, "left": 350.4, "attrs": {} },
+    {
+      "type": "wokwi-hc-sr04",
+      "id": "ultrasonic1",
+      "top": -65.7,
+      "left": 187.9,
+      "attrs": { "distance": "100" }
+    },
+    {
+      "type": "board-ssd1306",
+      "id": "oled1",
+      "top": -217.66,
+      "left": 221.03,
+      "attrs": { "i2cAddress": "0x3c" }
+    },
+    { "type": "wokwi-mpu6050", "id": "imu1", "top": -24.98, "left": -516.08, "attrs": {} }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:12", "r1:2", "green", [ "v0", "h-76.65" ] ],
+    [ "r1:1", "led1:A", "green", [ "h0" ] ],
+    [ "led1:C", "esp:CMD", "black", [ "v0" ] ],
+    [ "btn1:1.r", "esp:27", "green", [ "v0" ] ],
+    [ "btn1:2.r", "esp:CMD", "black", [ "h29", "v19.4" ] ],
+    [ "esp:15", "bz1:2", "green", [ "v0", "h-259.2" ] ],
+    [ "bz1:1", "esp:CMD", "black", [ "v0" ] ],
+    [ "stepper1:A-", "drv1:2B", "green", [ "v0" ] ],
+    [ "stepper1:A+", "drv1:2A", "green", [ "v0" ] ],
+    [ "stepper1:B+", "drv1:1A", "green", [ "v0" ] ],
+    [ "stepper1:B-", "drv1:1B", "green", [ "v0" ] ],
+    [ "stepper2:A-", "drv2:2B", "green", [ "v0" ] ],
+    [ "stepper2:A+", "drv2:2A", "green", [ "v0" ] ],
+    [ "stepper2:B-", "drv2:1B", "green", [ "v0" ] ],
+    [ "drv2:1A", "stepper2:B+", "green", [ "h0" ] ],
+    [ "esp:13", "drv1:STEP", "green", [ "h-19.05", "v182.4" ] ],
+    [ "esp:19", "drv2:STEP", "green", [ "h105.6", "v-19.2" ] ],
+    [ "esp:14", "drv1:DIR", "green", [ "h-47.85", "v220.8" ] ],
+    [ "drv1:GND.1", "esp:GND.1", "black", [ "v48.08", "h-115.05", "v-259.2" ] ],
+    [ "drv1:VDD", "esp:5V", "red", [ "h-19.05", "v19.28", "h-86.4", "v-172.8" ] ],
+    [ "drv2:GND.1", "esp:GND.1", "black", [ "v0.08", "h28.95", "v153.6", "h-336", "v-105.6" ] ],
+    [ "drv2:VDD", "esp:5V", "red", [ "h48.15", "v124.88", "h-326.4", "v-19.2" ] ],
+    [ "drv2:RESET", "drv2:SLEEP", "green", [ "h0" ] ],
+    [ "drv1:SLEEP", "drv1:RESET", "green", [ "h0" ] ],
+    [ "ultrasonic1:VCC", "esp:5V", "red", [ "v288", "h-124.8" ] ],
+    [ "ultrasonic1:GND", "esp:GND.2", "black", [ "v0" ] ],
+    [ "ultrasonic1:ECHO", "esp:18", "green", [ "v0" ] ],
+    [ "ultrasonic1:TRIG", "esp:5", "green", [ "v0" ] ],
+    [ "oled1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "oled1:VCC", "esp:5V", "red", [ "v0" ] ],
+    [ "oled1:SCL", "esp:22", "green", [ "v0" ] ],
+    [ "drv2:DIR", "esp:17", "green", [ "h-57.6", "v19.2" ] ],
+    [ "oled1:SDA", "esp:21", "green", [ "v0" ] ],
+    [ "imu1:VCC", "esp:5V", "red", [ "v0" ] ],
+    [ "imu1:GND", "esp:GND.1", "black", [ "v0" ] ],
+    [ "imu1:SCL", "esp:22", "green", [ "v0" ] ],
+    [ "imu1:SDA", "esp:21", "green", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
